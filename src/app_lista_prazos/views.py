@@ -9,7 +9,11 @@ def index(request):
     return render(request, "prazo_list.html")
 
 
-def insert_form(request):
+def form_adicionar(request):
+    if request.method == "POST":
+        add_prazo = Prazo(id=request.POST["id"], prazo=int(request.POST["prazo"]))
+        add_prazo.save()
+
     form = PrazoForm()
     context = {"form": form}
     return render(request, "app_lista_prazos/form.html", context)
