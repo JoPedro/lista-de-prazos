@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 class Prazo(models.Model):
-    id = models.CharField(max_length=8, primary_key=True)
+    id = models.CharField(max_length=255, primary_key=True)
     prazo_em_dias = models.PositiveSmallIntegerField(default=0)
 
     @property
