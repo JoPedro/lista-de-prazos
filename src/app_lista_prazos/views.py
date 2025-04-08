@@ -21,3 +21,6 @@ def form_adicionar(request):
 
 class PrazoListView(ListView):
     model = Prazo
+    paginate_by = 20
+
+    ordering = ["id"]
