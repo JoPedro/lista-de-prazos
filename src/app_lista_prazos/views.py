@@ -11,7 +11,9 @@ def index(request):
 
 def form_adicionar(request):
     if request.method == "POST":
-        add_prazo = Prazo(id=request.POST["id"], prazo=int(request.POST["prazo"]))
+        add_prazo = Prazo(
+            id=request.POST["id"], prazo_em_dias=int(request.POST["prazo_em_dias"])
+        )
         add_prazo.save()
 
     form = PrazoForm()
