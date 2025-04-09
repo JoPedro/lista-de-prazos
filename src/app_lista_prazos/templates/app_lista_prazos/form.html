@@ -1,8 +1,14 @@
 <form action="" method="post">
   {% csrf_token %}
   <section>
-    {% for field in form %} {{ field.as_field_group }} {% endfor %}
+    {% for field in form %}
+    {{ field.as_field_group }}
+    {% endfor %}
   </section>
+
+  <input type="checkbox" id="agora" name="agora" value="S">
+  <label for="agora">Prazo começa agora</label><br>
+
   <button type="submit">Adicionar</button>
 </form>
 
