@@ -13,18 +13,18 @@ def index(request):
 
 def form_adicionar(request):
     if request.method == "POST":
-        id = request.POST["id"]
-        prazo_em_dias = int(request.POST["prazo_em_dias"])
+        id = request.POST.get("id")
+        prazo_em_dias = int(request.POST.get("prazo_em_dias"))
 
-        print(request.POST)
+        data_de_vencimento = request.POST.get(
+            "data_de_vencimento"
+        ) or timezone.now() + timedelta(days=prazo_em_dias)
 
-        add_prazo = Prazo(
-            id,
-            prazo_em_dias,
-            data_de_vencimento=timezone.now() + timedelta(days=prazo_em_dias),
-        )
+        # Converter para datetime
+        print(data_de_vencimento)
 
-        add_prazo.save()
+        # add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
+        # add_prazo.save()
 
     form = PrazoForm()
     context = {"form": form}
