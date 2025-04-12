@@ -18,12 +18,15 @@ def form_adicionar(request):
 
         data_de_vencimento = request.POST.get(
             "data_de_vencimento"
-        ) or timezone.now() + timedelta(days=prazo_em_dias)
+        ) or timezone.now() + timedelta(
+            days=prazo_em_dias
+        )  # colocar em 00:00
 
         if type(data_de_vencimento) == str:
-            data_de_vencimento = datetime.strptime(data_de_vencimento, "%d/%m/%Y")
+            data_de_vencimento = datetime.strptime(
+                data_de_vencimento, "%d/%m/%Y"
+            ).replace(tzinfo=timezone.get_current_timezone())
 
-        # Passar informações de timezone
         add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
         add_prazo.save()
 
