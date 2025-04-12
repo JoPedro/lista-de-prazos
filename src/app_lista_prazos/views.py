@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from app_lista_prazos.forms import PrazoForm
@@ -20,11 +20,12 @@ def form_adicionar(request):
             "data_de_vencimento"
         ) or timezone.now() + timedelta(days=prazo_em_dias)
 
-        # Converter para datetime
-        print(data_de_vencimento)
+        if type(data_de_vencimento) == str:
+            data_de_vencimento = datetime.strptime(data_de_vencimento, "%d/%m/%Y")
 
-        # add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
-        # add_prazo.save()
+        # Passar informações de timezone
+        add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
+        add_prazo.save()
 
     form = PrazoForm()
     context = {"form": form}
@@ -33,6 +34,7 @@ def form_adicionar(request):
 
 class PrazoListView(ListView):
     model = Prazo
+    # Terminar paginação
     paginate_by = 20
 
     ordering = ["id"]

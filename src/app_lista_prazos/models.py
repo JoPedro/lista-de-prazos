@@ -7,7 +7,7 @@ from django.utils import timezone
 class Prazo(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     prazo_em_dias = models.PositiveSmallIntegerField(default=0)
-    data_de_vencimento = models.DateTimeField(default=datetime.fromtimestamp(0))
+    data_de_vencimento = models.DateTimeField(default=timezone.now)
 
     @property
     def dias_para_vencer(self):
