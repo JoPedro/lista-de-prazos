@@ -18,9 +18,11 @@ def form_adicionar(request):
 
         data_de_vencimento = request.POST.get(
             "data_de_vencimento"
-        ) or timezone.now() + timedelta(
+        ) or timezone.now().replace(
+            tzinfo=timezone.get_current_timezone(), hour=0, minute=0, second=0
+        ) + timedelta(
             days=prazo_em_dias
-        )  # colocar em 00:00
+        )
 
         if type(data_de_vencimento) == str:
             data_de_vencimento = datetime.strptime(
@@ -38,6 +40,6 @@ def form_adicionar(request):
 class PrazoListView(ListView):
     model = Prazo
     # Terminar paginação
-    paginate_by = 20
+    # paginate_by = 20
 
     ordering = ["id"]
