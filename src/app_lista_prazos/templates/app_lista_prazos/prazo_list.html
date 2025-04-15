@@ -1,4 +1,37 @@
-{% for prazo in object_list %} {{ prazo }}<br />
-{% endfor %}
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<a href="/adicionar">Novo prazo</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Prazos</title>
+</head>
+
+<body>
+  <main>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Prazo</th>
+        <th>Vence em</th>
+      </tr>
+      {% for prazo_obj in object_list %}
+      <tr>
+        <td>
+          {{ prazo_obj.id }}
+        </td>
+        <td>
+          {{ prazo_obj.prazo_em_dias }}
+        </td>
+        <td>
+          {{ prazo_obj.data_de_vencimento }} ({{ prazo_obj.dias_para_vencer }} dias)
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </main>
+
+  <a href="/adicionar">Novo prazo</a>
+</body>
+
+</html>
