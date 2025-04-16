@@ -9,26 +9,46 @@
 
 <body>
   <main>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Prazo</th>
-        <th>Vence em</th>
-      </tr>
-      {% for prazo_obj in object_list %}
-      <tr>
-        <td>
-          {{ prazo_obj.id }}
-        </td>
-        <td>
-          {{ prazo_obj.prazo_em_dias }}
-        </td>
-        <td>
-          {{ prazo_obj.data_de_vencimento }} ({{ prazo_obj.dias_para_vencer }} dias)
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+    <section>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Prazo</th>
+          <th>Vence em</th>
+        </tr>
+        {% for prazo_obj in page_obj %}
+        <tr>
+          <td>
+            {{ prazo_obj.id }}
+          </td>
+          <td>
+            {{ prazo_obj.prazo_em_dias }}
+          </td>
+          <td>
+            {{ prazo_obj.data_de_vencimento }} ({{ prazo_obj.dias_para_vencer }} dias)
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <div class="pagination">
+        <span class="step-links">
+          {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo;</a>
+          <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+          {% endif %}
+
+          <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+          </span>
+
+          {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    </section>
   </main>
 
   <a href="/adicionar">Novo prazo</a>
