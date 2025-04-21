@@ -39,7 +39,6 @@ def form_adicionar(request):
 
 class PrazoListView(ListView):
     model = Prazo
-    # Terminar paginação
-    # paginate_by = 20
+    paginate_by = 10
 
     ordering = ["id"]
