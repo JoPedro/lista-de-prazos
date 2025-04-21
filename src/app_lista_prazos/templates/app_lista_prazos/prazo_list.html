@@ -1,53 +1,61 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Prazos</title>
+  <link rel="stylesheet" href="{% static 'app_lista_prazos/style.css' %}">
 </head>
 
 <body>
   <main>
     <section>
       <table>
-        <tr>
-          <th>ID</th>
-          <th>Prazo</th>
-          <th>Vence em</th>
-        </tr>
-        {% for prazo_obj in page_obj %}
-        <tr>
-          <td>
-            {{ prazo_obj.id }}
-          </td>
-          <td>
-            {{ prazo_obj.prazo_em_dias }}
-          </td>
-          <td>
-            {{ prazo_obj.data_de_vencimento }} ({{ prazo_obj.dias_para_vencer }} dias)
-          </td>
-        </tr>
-        {% endfor %}
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Prazo (dias)</th>
+            <th>Vence em</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for prazo_obj in page_obj %}
+          <tr>
+            <td>
+              {{ prazo_obj.id }}
+            </td>
+            <td>
+              {{ prazo_obj.prazo_em_dias }}
+            </td>
+            <td>
+              {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }} ({{ prazo_obj.dias_para_vencer }} dias)
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo;</a>
+              <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+              {% endif %}
+
+              <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+              </span>
+
+              {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+              {% endif %}
+            </td>
+          </tr>
+        </tfoot>
       </table>
-
-      <div class="pagination">
-        <span class="step-links">
-          {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo;</a>
-          <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
-          {% endif %}
-
-          <span class="current">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-          </span>
-
-          {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
-          {% endif %}
-        </span>
-      </div>
     </section>
   </main>
 

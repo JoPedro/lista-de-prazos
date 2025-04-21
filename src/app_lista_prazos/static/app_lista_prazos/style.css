@@ -1,0 +1,37 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+main {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  width: 75%;
+  margin: 64px auto 0 auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 90%;
+  margin: 5% auto 0 auto;
+
+  & td,
+  th {
+    padding: 8px;
+  }
+
+  & thead th {
+    background: #5da5e0;
+    border: 2px solid #4a708f;
+  }
+
+  & tbody td {
+    border: 2px solid #cccccc;
+  }
+}
