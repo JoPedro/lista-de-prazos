@@ -13,7 +13,7 @@ def index(request):
 
 def form_adicionar(request):
     if request.method == "POST":
-        id = request.POST.get("id")
+        id = request.POST.get("identificador")
         prazo_em_dias = int(request.POST.get("prazo_em_dias"))
 
         data_de_vencimento = request.POST.get(
@@ -41,4 +41,4 @@ class PrazoListView(ListView):
     model = Prazo
     paginate_by = 10
 
-    ordering = ["id"]
+    ordering = ["data_de_vencimento"]

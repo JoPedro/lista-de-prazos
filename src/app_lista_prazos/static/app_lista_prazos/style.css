@@ -6,32 +6,95 @@ body {
 
 body {
   background: #f2f2f2;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
-  background: #fff;
-  border: 1px solid #e2e2e2;
-  border-radius: 4px;
-  width: 75%;
-  margin: 64px auto 0 auto;
+  background: white;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 90%;
+  margin: auto;
+  padding: 40px 0;
 }
 
 table {
   border-collapse: collapse;
   width: 90%;
-  margin: 5% auto 0 auto;
+  margin: auto;
+
+  & tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
 
   & td,
   th {
     padding: 8px;
+    width: 25%;
   }
 
   & thead th {
-    background: #5da5e0;
-    border: 2px solid #4a708f;
+    background: #5e78e0;
+    border: 1px solid #31438f;
+    color: white;
   }
 
   & tbody td {
-    border: 2px solid #cccccc;
+    border: 1px solid #cccccc;
   }
+
+  & tfoot td {
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  & tfoot a {
+    padding: 8px 16px;
+    margin: 0 2px;
+    color: white;
+    font-weight: bold;
+    background: #267a34;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  & tfoot a:hover {
+    background: #1e4b25;
+    transition: 0.2s;
+  }
+}
+
+.tab {
+  background: #5ee073;
+  border: 1px solid #5ee073;
+  height: 40px;
+  width: 90%;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  margin: 64px auto 0 auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+
+  & a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+  }
+}
+
+.current {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  margin: 0 4px;
 }

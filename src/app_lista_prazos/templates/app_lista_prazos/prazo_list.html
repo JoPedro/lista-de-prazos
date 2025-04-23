@@ -11,43 +11,47 @@
 </head>
 
 <body>
+  <div class="tab">
+    <a href="/adicionar">CADASTRAR NOVO PRAZO +</a>
+  </div>
   <main>
     <section>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Identificador</th>
             <th>Prazo (dias)</th>
-            <th>Vence em</th>
+            <th>Data de vencimento</th>
+            <th>Dias para vencer</th>
           </tr>
         </thead>
         <tbody>
           {% for prazo_obj in page_obj %}
           <tr>
             <td>
-              {{ prazo_obj.id }}
+              {{ prazo_obj.identificador }}
             </td>
             <td>
               {{ prazo_obj.prazo_em_dias }}
             </td>
             <td>
-              {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }} ({{ prazo_obj.dias_para_vencer }} dias)
+              {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }}
+            </td>
+            <td>
+              <b>{{ prazo_obj.dias_para_vencer }} dias</b>
             </td>
           </tr>
           {% endfor %}
         </tbody>
         <tfoot>
           <tr>
-            <td>
+            <td colspan="4">
               {% if page_obj.has_previous %}
               <a href="?page=1">&laquo;</a>
               <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
               {% endif %}
-
-              <span class="current">
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-              </span>
-
+              <span class="current">PÁGINA <b>{{ page_obj.number }}</b> DE
+                <b>{{ page_obj.paginator.num_pages }}</b></span>
               {% if page_obj.has_next %}
               <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
               <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
@@ -59,7 +63,6 @@
     </section>
   </main>
 
-  <a href="/adicionar">Novo prazo</a>
 </body>
 
 </html>
