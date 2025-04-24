@@ -52,13 +52,11 @@ table {
   }
 
   & tfoot a {
-    padding: 8px 16px;
-    margin: 0 2px;
+    padding: 0.5em 0.75em;
     color: white;
     font-weight: bold;
     background: #267a34;
     text-decoration: none;
-    border-radius: 4px;
   }
 
   & tfoot a:hover {
@@ -76,16 +74,14 @@ table {
   border-top-left-radius: 4px;
   margin: 64px auto 0 auto;
   display: flex;
-  justify-content: right;
   align-items: center;
 
   & a {
     text-decoration: none;
     color: black;
     font-weight: bold;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 16px;
-    margin-right: 8px;
+    font-size: 1em;
+    margin-left: 8px;
   }
 
   & a:hover {
@@ -94,7 +90,6 @@ table {
 }
 
 .current {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 1em;
   margin: 0 4px;
 }

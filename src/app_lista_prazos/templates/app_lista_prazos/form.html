@@ -11,22 +11,27 @@
   <link rel="stylesheet" href="{% static 'app_lista_prazos/style.css' %}">
 </head>
 
-<body onload="changeDateInput()">
-  <form action="" method="post">
-    {% csrf_token %}
+<body>
+  <div class="tab">
+    <a href="/">&lt; VOLTAR</a>
+  </div>
+  <main>
     <section>
-      {% for field in form %}
-      {{ field.as_field_group }}
-      {% endfor %}
+      <form action="" method="post">
+        {% csrf_token %}
+        <section>
+          {% for field in form %}
+          {{ field.as_field_group }}
+          {% endfor %}
+        </section>
+
+        <input type="checkbox" name="agora">
+        <label for="agora">Prazo começa agora</label><br>
+
+        <button type="submit">Adicionar</button>
+      </form>
     </section>
-
-    <input type="checkbox" name="agora">
-    <label for="agora">Prazo começa agora</label><br>
-
-    <button type="submit">Adicionar</button>
-  </form>
-
-  <a href="/">Voltar</a>
+  </main>
 
 </body>
 
