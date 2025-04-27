@@ -1,19 +1,15 @@
+from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from django.shortcuts import render
-from django.views.generic.list import ListView
 from app_lista_prazos.forms import PrazoForm
 from app_lista_prazos.models import Prazo
 from django.utils import timezone
 
 
-# Create your views here.
 def index(request):
-    return render(request, "prazo_list.html")
-
-
-def form_adicionar(request):
+    # Formulário enviado
     if request.method == "POST":
-        id = request.POST.get("id")
+        id = request.POST.get("identificador")
         prazo_em_dias = int(request.POST.get("prazo_em_dias"))
 
         data_de_vencimento = request.POST.get(
@@ -32,13 +28,18 @@ def form_adicionar(request):
         add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
         add_prazo.save()
 
+    # Lista paginada
+    prazo_list = Prazo.objects.all().order_by("data_de_vencimento")
+    paginator = Paginator(prazo_list, 10)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    # Formulário
     form = PrazoForm()
-    context = {"form": form}
-    return render(request, "app_lista_prazos/form.html", context)
 
-
-class PrazoListView(ListView):
-    model = Prazo
-    paginate_by = 10
-
-    ordering = ["id"]
+    return render(
+        request,
+        "app_lista_prazos/prazo_list.html",
+        {"page_obj": page_obj, "form": form},
+    )
