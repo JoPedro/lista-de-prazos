@@ -21,48 +21,128 @@ main {
   padding: 40px 0;
 }
 
+section {
+  overflow-x: auto;
+  width: 90%;
+  margin: 0 auto;
+}
+
+button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: none;
+  border: 0;
+}
+
+button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+form button,
+tfoot a {
+  padding: 0.5em 0.75em;
+  color: white;
+  font-weight: bold;
+  background: #267a34;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+form button:hover,
+tfoot a:hover {
+  text-decoration: none;
+  background: #1e4b25;
+  transition: 0.2s;
+}
+
 table {
   border-collapse: collapse;
-  width: 90%;
   margin: auto;
+  width: 100%;
 
-  & tr:nth-child(even) {
+  tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  & td,
+  td,
   th {
     padding: 8px;
-    width: 25%;
   }
 
-  & thead th {
+  thead th {
     background: #5e78e0;
     border: 1px solid #31438f;
     color: white;
   }
 
-  & tbody td {
+  tbody td {
     border: 1px solid #cccccc;
   }
 
-  & tfoot td {
+  tfoot td {
     text-align: center;
     padding: 16px 0;
   }
+}
 
-  & tfoot a {
-    padding: 0.5em 0.75em;
-    color: white;
-    font-weight: bold;
+aside {
+  position: fixed;
+  display: none;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 25vw;
+  background: white;
+
+  input {
+    margin: 2px 0 8px 0;
+    border-radius: 4px;
+    padding: 8px;
+    border: 1px solid #aaaaaa;
+    font-size: 1em;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  form {
+    padding: 24px;
+
+    button {
+      margin-top: 6px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+
+  hr {
+    border: 0;
+    margin: 0;
+    height: 3px;
     background: #267a34;
-    text-decoration: none;
   }
+}
 
-  & tfoot a:hover {
-    background: #1e4b25;
-    transition: 0.2s;
+@media (orientation: portrait) {
+  aside {
+    width: 75vw;
   }
+}
+
+.aside-tab {
+  background: #5ee073;
+  border: 1px solid #5ee073;
+  height: 24px;
+  display: flex;
+  align-items: center;
 }
 
 .tab {
@@ -76,20 +156,23 @@ table {
   display: flex;
   align-items: center;
 
-  & a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
+  button {
     font-size: 1em;
     margin-left: 8px;
-  }
-
-  & a:hover {
-    text-decoration: underline;
   }
 }
 
 .current {
   font-size: 1em;
   margin: 0 4px;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
 }
