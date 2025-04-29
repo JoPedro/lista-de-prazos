@@ -17,7 +17,7 @@
 
 <body>
   {% if messages %}
-  <div class="toast fade-in">
+  <div class="toast fade-in-and-out">
     <ul class="messages">
       {% for message in messages %}
       <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
@@ -29,7 +29,7 @@
     <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
   </div>
   <main>
-    <div class="overlay transparent-black">
+    <div class="overlay transparent-black fade-in">
       <aside id="adicionar-tab" class="overlay">
         <div class="small-tab">
           <button id="fechar-adicionar" type="button">✕ FECHAR</button>
