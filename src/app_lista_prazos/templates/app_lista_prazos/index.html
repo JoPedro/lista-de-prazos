@@ -9,20 +9,33 @@
   <title>Lista de Prazos</title>
   <link rel="stylesheet" href="{% static 'app_lista_prazos/style.css' %}">
   <link rel="icon" type="image/x-icon" href="{% static 'app_lista_prazos/favicon.ico' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
+  {% if messages %}
+  <div class="toast fade-in-and-out">
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
   <div class="tab">
-    <button id="cadastrar">+ CADASTRAR NOVO PRAZO</button>
+    <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
   </div>
   <main>
-    <div class="overlay">
-      <aside>
-        <div class="aside-tab">
-          <button id="fechar">✕ FECHAR</button>
+    <div class="overlay transparent-black fade-in">
+      <aside id="adicionar-tab" class="overlay">
+        <div class="small-tab">
+          <button id="fechar-adicionar" type="button">✕ FECHAR</button>
         </div>
         <hr>
-        <form action="" method="post">
+        <form action="/adicionar" method="post">
           {% csrf_token %}
           {% for field in form %}
           {{ field.as_field_group }}
@@ -34,6 +47,13 @@
           <button type="submit">Adicionar</button>
         </form>
       </aside>
+      <aside id="excluir-tab" class="overlay">
+        <div class="small-tab">
+          <button id="fechar-excluir" type="button">✕ FECHAR</button>
+        </div>
+        <hr>
+        Deseja excluir este prazo?
+      </aside>
     </div>
     <section>
       <table>
@@ -43,6 +63,7 @@
             <th>Prazo (dias)</th>
             <th>Data de vencimento</th>
             <th>Dias para vencer</th>
+            <th class="delete-th">Excluir</th>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +80,13 @@
             </td>
             <td>
               <b>{{ prazo_obj.dias_para_vencer }} dias</b>
+            </td>
+            <td class="delete-td">
+              <div class="flex-center">
+                <a href=" /excluir/{{ prazo_obj.identificador | urlencode }}">
+                  <img class="flex-center" src="{% static 'app_lista_prazos/trash.svg' %}" alt="Ícone de lata de lixo">
+                </a>
+              </div>
             </td>
           </tr>
           {% endfor %}
@@ -82,7 +110,7 @@
       </table>
     </section>
   </main>
-  <script src="{% static 'app_lista_prazos/form.js' %}"></script>
+  <script src="{% static 'app_lista_prazos/index.js' %}"></script>
 </body>
 
 </html>

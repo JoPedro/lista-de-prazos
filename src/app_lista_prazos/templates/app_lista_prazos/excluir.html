@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Prazos</title>
+  <link rel="stylesheet" href="{% static 'app_lista_prazos/style.css' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'app_lista_prazos/favicon.ico' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="small-tab">
+    <a href="javascript:history.go(-1)">&lt; VOLTAR</a>
+  </div>
+  <hr>
+  <main class="delete">
+    <section>
+      <form action="" method="post">
+        {% csrf_token %}
+        <p><b>Deseja excluir este prazo?</b></p>
+        <p>Identificador: {{ prazo.identificador }}</p>
+        <p>Prazo: {{ prazo.prazo_em_dias }} dias</p>
+        <p>Data de vencimento: {{ prazo.data_de_vencimento | date:"d/m/Y" }}</p>
+        <p>Vence em: {{ prazo.dias_para_vencer }} dias</p>
+        <button class="button-delete" type="submit">Excluir</button>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>
