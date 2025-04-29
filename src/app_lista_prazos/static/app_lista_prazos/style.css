@@ -88,10 +88,7 @@ table {
 }
 
 aside {
-  position: fixed;
-  display: none;
   right: 0;
-  top: 0;
   height: 100vh;
   width: 25vw;
   background: white;
@@ -122,13 +119,6 @@ aside {
       font-size: 14px;
     }
   }
-
-  hr {
-    border: 0;
-    margin: 0;
-    height: 3px;
-    background: #267a34;
-  }
 }
 
 @media (orientation: portrait) {
@@ -137,7 +127,14 @@ aside {
   }
 }
 
-.aside-tab {
+hr {
+  border: 0;
+  margin: 0;
+  height: 3px;
+  background: #267a34;
+}
+
+.small-tab {
   background: #5ee073;
   border: 1px solid #5ee073;
   height: 24px;
@@ -170,9 +167,59 @@ aside {
 .overlay {
   position: fixed;
   display: none;
+  top: 0;
+}
+
+.transparent-black {
   background: rgba(0, 0, 0, 0.5);
+  left: 0;
   height: 100vh;
   width: 100vw;
-  top: 0;
-  left: 0;
+}
+
+.delete-td {
+  width: 4em;
+  text-align: center;
+}
+
+.delete-td a {
+  text-decoration: none;
+  color: white;
+  padding: 4px 12px;
+  background: #e74e46;
+  border-radius: 4px;
+}
+
+.delete-td a:hover {
+  background: #941a14;
+  transition: 0.2s;
+}
+
+.delete-th {
+  background: #e74e46;
+  border-color: #941a14;
+}
+
+.small-tab a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  margin-left: 8px;
+}
+
+.small-tab a:hover {
+  text-decoration: underline;
+}
+
+.button-delete {
+  background: #e74e46;
+}
+
+.button-delete:hover {
+  background: #941a14;
+  transition: 0.2s;
+}
+
+.delete-form {
+  padding: 24px;
 }
