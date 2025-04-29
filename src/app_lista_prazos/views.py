@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from django.http import HttpResponseRedirect
@@ -44,15 +45,19 @@ def adicionar(request):
 
     add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
     add_prazo.save()
+    messages.success(request, "Prazo adicionado com sucesso.")
 
     return HttpResponseRedirect("/")
 
 
 def excluir(request, pk):
+    prazo = Prazo.objects.get(identificador=pk)
+
     if request.method == "POST":
+        prazo.delete()
+        messages.success(request, "Prazo removido com sucesso.")
         return HttpResponseRedirect("/")
 
-    prazo = Prazo.objects.get(identificador=pk)
     context = {"prazo": prazo}
 
     return render(request, "app_lista_prazos/excluir.html", context)

@@ -9,9 +9,22 @@
   <title>Lista de Prazos</title>
   <link rel="stylesheet" href="{% static 'app_lista_prazos/style.css' %}">
   <link rel="icon" type="image/x-icon" href="{% static 'app_lista_prazos/favicon.ico' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
+  {% if messages %}
+  <div class="toast fade-in">
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
   <div class="tab">
     <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
   </div>
@@ -69,7 +82,11 @@
               <b>{{ prazo_obj.dias_para_vencer }} dias</b>
             </td>
             <td class="delete-td">
-              <a href="/excluir/{{ prazo_obj.identificador | urlencode }}">✕</a>
+              <div class="flex-center">
+                <a href=" /excluir/{{ prazo_obj.identificador | urlencode }}">
+                  <img class="flex-center" src="{% static 'app_lista_prazos/trash.svg' %}" alt="Ícone de lata de lixo">
+                </a>
+              </div>
             </td>
           </tr>
           {% endfor %}
