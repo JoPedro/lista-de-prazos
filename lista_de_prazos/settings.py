@@ -38,12 +38,12 @@ CSRF_TRUSTED_ORIGINS = os.getenv(
 
 INSTALLED_APPS = [
     "app_lista_prazos.apps.AppListaPrazosConfig",
+    "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
 ]
 
