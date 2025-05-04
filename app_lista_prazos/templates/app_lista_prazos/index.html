@@ -1,117 +1,101 @@
-<!DOCTYPE html>
+{% extends "app_lista_prazos/base.html" %}
 {% load static %}
 
-<html lang="pt-BR">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Prazos</title>
-  <link rel="stylesheet" href="{% static 'app_lista_prazos/css/style.css' %}">
-  <link rel="icon" type="image/x-icon" href="{% static 'app_lista_prazos/img/favicon.ico' %}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
-</head>
-
-<body>
-  {% if messages %}
-  <div class="toast fade-in-and-out">
-    <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+{% block content %}
+{% if messages %}
+<div class="toast fade-in-and-out">
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="tab">
+  <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
+</div>
+<main>
+  <div class="overlay transparent-black fade-in">
+    <aside id="adicionar-tab" class="overlay">
+      <div class="small-tab">
+        <button id="fechar-adicionar" type="button">✕ FECHAR</button>
+      </div>
+      <hr>
+      <form action="/adicionar" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        {{ field.as_field_group }}
         {% endfor %}
-    </ul>
+
+        <input type="checkbox" name="agora">
+        <label for="agora">Prazo começa agora</label><br>
+
+        <button type="submit">Adicionar</button>
+      </form>
+    </aside>
+    <aside id="excluir-tab" class="overlay">
+      <div class="small-tab">
+        <button id="fechar-excluir" type="button">✕ FECHAR</button>
+      </div>
+      <hr>
+      Deseja excluir este prazo?
+    </aside>
   </div>
-  {% endif %}
-  <div class="tab">
-    <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
-  </div>
-  <main>
-    <div class="overlay transparent-black fade-in">
-      <aside id="adicionar-tab" class="overlay">
-        <div class="small-tab">
-          <button id="fechar-adicionar" type="button">✕ FECHAR</button>
-        </div>
-        <hr>
-        <form action="/adicionar" method="post">
-          {% csrf_token %}
-          {% for field in form %}
-          {{ field.as_field_group }}
-          {% endfor %}
-
-          <input type="checkbox" name="agora">
-          <label for="agora">Prazo começa agora</label><br>
-
-          <button type="submit">Adicionar</button>
-        </form>
-      </aside>
-      <aside id="excluir-tab" class="overlay">
-        <div class="small-tab">
-          <button id="fechar-excluir" type="button">✕ FECHAR</button>
-        </div>
-        <hr>
-        Deseja excluir este prazo?
-      </aside>
-    </div>
-    <section>
-      <table>
-        <thead>
-          <tr>
-            <th>Identificador</th>
-            <th>Prazo (dias)</th>
-            <th>Data de vencimento</th>
-            <th>Dias para vencer</th>
-            <th class="delete-th">Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for prazo_obj in page_obj %}
-          <tr>
-            <td>
-              {{ prazo_obj.identificador }}
-            </td>
-            <td>
-              {{ prazo_obj.prazo_em_dias }}
-            </td>
-            <td>
-              {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }}
-            </td>
-            <td>
-              <b>{{ prazo_obj.dias_para_vencer }} dias</b>
-            </td>
-            <td class="delete-td">
-              <div class="flex-center">
-                <a href=" /excluir/{{ prazo_obj.identificador | urlencode }}">
-                  <img class="flex-center" src="{% static 'app_lista_prazos/img/trash.svg' %}"
-                    alt="Ícone de lata de lixo">
-                </a>
-              </div>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="4">
-              {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo;</a>
-              <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
-              {% endif %}
-              <span class="current">PÁGINA <b>{{ page_obj.number }}</b> DE
-                <b>{{ page_obj.paginator.num_pages }}</b></span>
-              {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
-              <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
-              {% endif %}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>
-  </main>
-  <script src="{% static 'app_lista_prazos/js/index.js' %}"></script>
-</body>
-
-</html>
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Identificador</th>
+          <th>Prazo (dias)</th>
+          <th>Data de vencimento</th>
+          <th>Dias para vencer</th>
+          <th class="delete-th">Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prazo_obj in page_obj %}
+        <tr>
+          <td>
+            {{ prazo_obj.identificador }}
+          </td>
+          <td>
+            {{ prazo_obj.prazo_em_dias }}
+          </td>
+          <td>
+            {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }}
+          </td>
+          <td>
+            <b>{{ prazo_obj.dias_para_vencer }} dias</b>
+          </td>
+          <td class="delete-td">
+            <div class="flex-center">
+              <a href=" /excluir/{{ prazo_obj.identificador | urlencode }}">
+                <img class="flex-center" src="{% static 'app_lista_prazos/img/trash.svg' %}"
+                  alt="Ícone de lata de lixo">
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo;</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+            {% endif %}
+            <span class="current">PÁGINA <b>{{ page_obj.number }}</b> DE
+              <b>{{ page_obj.paginator.num_pages }}</b></span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+</main>
+<script src="{% static 'app_lista_prazos/js/index.js' %}"></script>
+{% endblock %}
