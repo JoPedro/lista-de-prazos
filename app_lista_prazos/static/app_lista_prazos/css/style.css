@@ -14,10 +14,10 @@ main {
   border-left: 1px solid #e2e2e2;
   border-right: 1px solid #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  width: 90%;
+  width: 75%;
   margin: auto;
   padding: 40px 0;
 }
@@ -47,7 +47,7 @@ tfoot a {
   font-weight: bold;
   background: #267a34;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 16px;
   font-size: 1em;
 }
 
@@ -96,7 +96,7 @@ aside {
 
   input {
     margin: 2px 0 8px 0;
-    border-radius: 4px;
+    border-radius: 16px;
     padding: 8px;
     border: 1px solid #aaaaaa;
     font-size: 1em;
@@ -122,12 +122,6 @@ aside {
   }
 }
 
-@media (orientation: portrait) {
-  aside {
-    width: 75vw;
-  }
-}
-
 hr {
   border: 0;
   margin: 0;
@@ -148,9 +142,9 @@ hr {
   background: #5ee073;
   border: 1px solid #5ee073;
   height: 40px;
-  width: 90%;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
+  width: 75%;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
   margin: 64px auto 0 auto;
   display: flex;
   align-items: center;
@@ -225,7 +219,7 @@ hr {
 }
 
 .delete {
-  border-radius: 4px;
+  border-radius: 16px;
   margin-top: 64px;
   border: 1px solid #e2e2e2;
 }
@@ -294,5 +288,16 @@ hr {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media (orientation: portrait) {
+  main,
+  .tab {
+    width: 90%;
+  }
+
+  aside {
+    width: 75vw;
   }
 }
