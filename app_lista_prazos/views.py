@@ -10,7 +10,7 @@ from django.utils import timezone
 
 def index(request):
     # Lista paginada
-    prazo_list = Prazo.objects.all().order_by("data_de_vencimento")
+    prazo_list = Prazo.objects.all().order_by("data_de_início")
     paginator = Paginator(prazo_list, 10)
 
     page_number = request.GET.get("page")
@@ -27,23 +27,24 @@ def index(request):
 
 
 def adicionar(request):
-    id = request.POST.get("identificador")
-    prazo_em_dias = int(request.POST.get("prazo_em_dias"))
+    identificador = request.POST.get("identificador")
+    data_de_início = datetime.strptime(
+        request.POST.get("data_de_início"), "%d/%m/%Y"
+    ).replace(tzinfo=timezone.get_current_timezone())
+    prazo_1_em_dias = int(request.POST.get("prazo_1_em_dias"))
+    prazo_2_em_dias = int(request.POST.get("prazo_2_em_dias"))
 
-    data_de_vencimento = request.POST.get(
-        "data_de_vencimento"
-    ) or timezone.now().replace(
-        tzinfo=timezone.get_current_timezone(), hour=0, minute=0, second=0
-    ) + timedelta(
-        days=prazo_em_dias
+    data_de_vencimento_1 = data_de_início + timedelta(days=prazo_1_em_dias)
+    data_de_vencimento_2 = data_de_início + timedelta(days=prazo_2_em_dias)
+
+    add_prazo = Prazo(
+        identificador,
+        data_de_início,
+        prazo_1_em_dias,
+        prazo_2_em_dias,
+        data_de_vencimento_1,
+        data_de_vencimento_2,
     )
-
-    if type(data_de_vencimento) == str:
-        data_de_vencimento = datetime.strptime(data_de_vencimento, "%d/%m/%Y").replace(
-            tzinfo=timezone.get_current_timezone()
-        )
-
-    add_prazo = Prazo(id, prazo_em_dias, data_de_vencimento)
     add_prazo.save()
     messages.success(request, "Prazo adicionado com sucesso.")
 
