@@ -1,2 +1,2 @@
 # lista-de-prazos
-Lista de prazos por identificador ordenada dos mais curtos aos mais longos.
+Lista de prazos por identificador ordenada por data de início.
