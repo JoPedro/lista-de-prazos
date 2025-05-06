@@ -6,5 +6,12 @@ from app_lista_prazos.models import Prazo
 class PrazoForm(ModelForm):
     class Meta:
         model = Prazo
-        fields = "__all__"
-        widgets = {"data_de_vencimento": DateTimeInput(format="%d/%m/%Y")}
+        fields = [
+            "identificador",
+            "data_de_início",
+            "prazo_1_em_dias",
+            "prazo_2_em_dias",
+        ]
+        widgets = {
+            "data_de_início": DateTimeInput(format="%d/%m/%Y"),
+        }

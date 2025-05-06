@@ -15,10 +15,10 @@
   <button id="cadastrar" type="button">+ CADASTRAR NOVO PRAZO</button>
 </div>
 <main>
-  <div class="overlay transparent-black fade-in">
+  <div id="semi-black-overlay" class="overlay transparent-black fade-in">
     <aside id="adicionar-tab" class="overlay">
       <div class="small-tab">
-        <button id="fechar-adicionar" type="button">✕ FECHAR</button>
+        <button id="fechar-adicionar-tab" type="button">✕ FECHAR</button>
       </div>
       <hr>
       <form action="/adicionar" method="post">
@@ -27,18 +27,8 @@
         {{ field.as_field_group }}
         {% endfor %}
 
-        <input type="checkbox" name="agora">
-        <label for="agora">Prazo começa agora</label><br>
-
         <button type="submit">Adicionar</button>
       </form>
-    </aside>
-    <aside id="excluir-tab" class="overlay">
-      <div class="small-tab">
-        <button id="fechar-excluir" type="button">✕ FECHAR</button>
-      </div>
-      <hr>
-      Deseja excluir este prazo?
     </aside>
   </div>
   <section>
@@ -46,9 +36,11 @@
       <thead>
         <tr>
           <th>Identificador</th>
-          <th>Prazo (dias)</th>
-          <th>Data de vencimento</th>
-          <th>Dias para vencer</th>
+          <th>Data de início</th>
+          <th>Prazo 1 (dias)</th>
+          <th>Vence em</th>
+          <th>Prazo 2 (dias)</th>
+          <th>Vence em</th>
           <th class="delete-th">Excluir</th>
         </tr>
       </thead>
@@ -59,13 +51,19 @@
             {{ prazo_obj.identificador }}
           </td>
           <td>
-            {{ prazo_obj.prazo_em_dias }}
+            {{ prazo_obj.data_de_início | date:"d/m/Y" }}
           </td>
           <td>
-            {{ prazo_obj.data_de_vencimento | date:"d/m/Y" }}
+            {{ prazo_obj.prazo_1_em_dias }}
           </td>
           <td>
-            <b>{{ prazo_obj.dias_para_vencer }} dias</b>
+            {{ prazo_obj.data_de_vencimento_1 | date:"d/m/Y" }} <b>({{ prazo_obj.dias_para_vencer_1 }} dias)</b>
+          </td>
+          <td>
+            {{ prazo_obj.prazo_2_em_dias }}
+          </td>
+          <td>
+            {{ prazo_obj.data_de_vencimento_2 | date:"d/m/Y" }} <b>({{ prazo_obj.dias_para_vencer_2 }} dias)
           </td>
           <td class="delete-td">
             <div class="flex-center">
@@ -80,7 +78,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="4">
+          <td colspan="7">
             {% if page_obj.has_previous %}
             <a href="?page=1">&laquo;</a>
             <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
