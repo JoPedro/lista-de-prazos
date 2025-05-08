@@ -12,9 +12,17 @@
       {% csrf_token %}
       <p><b>Deseja excluir este prazo?</b></p>
       <p>Identificador: {{ prazo.identificador }}</p>
-      <p>Prazo: {{ prazo.prazo_em_dias }} dias</p>
-      <p>Data de vencimento: {{ prazo.data_de_vencimento | date:"d/m/Y" }}</p>
-      <p>Vence em: {{ prazo.dias_para_vencer }} dias</p>
+      <p>Data de início: {{ prazo.data_de_início | date:'d/m/Y' }}</p>
+      <p>Prazo 1: {{ prazo.prazo_1_em_dias }} dias</p>
+      <p>
+        Vence em: {{ prazo.data_de_vencimento_1 | date:"d/m/Y" }}
+        <b>({{ prazo.dias_para_vencer_1 }} dias)</b>
+      </p>
+      <p>Prazo 2: {{ prazo.prazo_2_em_dias }} dias</p>
+      <p>
+        Vence em: {{ prazo.data_de_vencimento_2 | date:"d/m/Y" }}
+        <b>({{ prazo.dias_para_vencer_2 }} dias)</b>
+      </p>
       <button class="button-delete" type="submit">Excluir</button>
     </form>
   </section>
