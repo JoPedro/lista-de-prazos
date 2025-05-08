@@ -1,13 +1,14 @@
 {% extends "app_lista_prazos/base.html" %}
 {% load static %}
+{% load abs %}
 
 {% block content %}
 {% if messages %}
 <div class="toast fade-in-and-out">
   <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-      {% endfor %}
+    <li {% if message.tags %}class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
   </ul>
 </div>
 {% endif %}
@@ -56,14 +57,46 @@
           <td>
             {{ prazo_obj.prazo_1_em_dias }}
           </td>
-          <td>
-            {{ prazo_obj.data_de_vencimento_1 | date:"d/m/Y" }} <b>({{ prazo_obj.dias_para_vencer_1 }} dias)</b>
+          <td {% if prazo_obj.dias_para_vencer_1 <= 0 %}class="prazo-vencido" {% endif %}>
+            <div class="flex-between">
+              <span>
+                {{ prazo_obj.data_de_vencimento_1 | date:"d/m/Y" }}
+                <b>
+                  {% if prazo_obj.dias_para_vencer_1 != 0 %}
+                    ({% if prazo_obj.dias_para_vencer_1 < 0 %}há {% endif %}{{ prazo_obj.dias_para_vencer_1 | abs }} 
+                    dia{% if prazo_obj.dias_para_vencer_1 < -1 or prazo_obj.dias_para_vencer_1 > 1 %}s{% endif %})
+                  {% else %}
+                    (hoje)
+                  {% endif %}
+                </b>
+              </span>
+
+              {% if prazo_obj.dias_para_vencer_1 <= 0 %} 
+                <img src="{% static 'app_lista_prazos/img/attention.svg' %}" alt="Ícone de exclamação vermelho">
+              {% endif %}
+            </div>
           </td>
           <td>
             {{ prazo_obj.prazo_2_em_dias }}
           </td>
-          <td>
-            {{ prazo_obj.data_de_vencimento_2 | date:"d/m/Y" }} <b>({{ prazo_obj.dias_para_vencer_2 }} dias)
+          <td {% if prazo_obj.dias_para_vencer_2 <= 0 %}class="prazo-vencido" {% endif %}>
+            <div class="flex-between">
+              <span>
+                {{ prazo_obj.data_de_vencimento_2 | date:"d/m/Y" }}
+                <b>
+                  {% if prazo_obj.dias_para_vencer_2 != 0 %}
+                    ({% if prazo_obj.dias_para_vencer_2 < 0 %}há {% endif %}{{ prazo_obj.dias_para_vencer_2 | abs }} 
+                    dia{% if prazo_obj.dias_para_vencer_2 < -1 or prazo_obj.dias_para_vencer_2 > 1 %}s{% endif %})
+                  {% else %}
+                    (hoje)
+                  {% endif %}
+                </b>
+              </span>
+
+              {% if prazo_obj.dias_para_vencer_2 <= 0 %} 
+                <img src="{% static 'app_lista_prazos/img/attention.svg' %}" alt="Ícone de exclamação vermelho">
+              {% endif %}
+            </div>
           </td>
           <td class="delete-td">
             <div class="flex-center">
@@ -76,24 +109,20 @@
         </tr>
         {% endfor %}
       </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="7">
-            {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo;</a>
-            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
-            {% endif %}
-            <span class="current">PÁGINA <b>{{ page_obj.number }}</b> DE
-              <b>{{ page_obj.paginator.num_pages }}</b></span>
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
-            {% endif %}
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </section>
+  <div class="navigation">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo;</a>
+    <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+    {% endif %}
+    <span class="current">PÁGINA <b>{{ page_obj.number }}</b> DE
+      <b>{{ page_obj.paginator.num_pages }}</b></span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+    {% endif %}
+  </div>
 </main>
 <script src="{% static 'app_lista_prazos/js/index.js' %}"></script>
 {% endblock %}

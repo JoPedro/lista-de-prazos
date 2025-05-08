@@ -27,24 +27,22 @@ def index(request):
 
 
 def adicionar(request):
-    identificador = request.POST.get("identificador")
     data_de_início = datetime.strptime(
         request.POST.get("data_de_início"), "%d/%m/%Y"
     ).replace(tzinfo=timezone.get_current_timezone())
     prazo_1_em_dias = int(request.POST.get("prazo_1_em_dias"))
     prazo_2_em_dias = int(request.POST.get("prazo_2_em_dias"))
 
-    data_de_vencimento_1 = data_de_início + timedelta(days=prazo_1_em_dias)
-    data_de_vencimento_2 = data_de_início + timedelta(days=prazo_2_em_dias)
+    values = {
+        "identificador": request.POST.get("identificador"),
+        "data_de_início": data_de_início,
+        "prazo_1_em_dias": prazo_1_em_dias,
+        "prazo_2_em_dias": prazo_2_em_dias,
+        "data_de_vencimento_1": data_de_início + timedelta(days=prazo_1_em_dias),
+        "data_de_vencimento_2": data_de_início + timedelta(days=prazo_2_em_dias),
+    }
 
-    add_prazo = Prazo(
-        identificador,
-        data_de_início,
-        prazo_1_em_dias,
-        prazo_2_em_dias,
-        data_de_vencimento_1,
-        data_de_vencimento_2,
-    )
+    add_prazo = Prazo(**values)
     add_prazo.save()
     messages.success(request, "Prazo adicionado com sucesso.")
 

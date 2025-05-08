@@ -12,30 +12,44 @@ class Command(BaseCommand):
         with open("./app_lista_prazos/management/commands/json/data.json", "r") as file:
             seed_data = json.load(file)
 
+        atualizados = 0
+        inseridos = 0
+
         for prazo in seed_data["data"]:
-            identificador = prazo["identificador"]
-            prazo_1_em_dias = prazo["prazo_1_em_dias"]
-            prazo_2_em_dias = prazo["prazo_2_em_dias"]
             data_de_início = datetime.strptime(
                 prazo["data_de_início"], "%d/%m/%Y"
             ).replace(tzinfo=timezone.get_current_timezone())
 
-            data_de_vencimento_1 = data_de_início + timedelta(days=prazo_1_em_dias)
-            data_de_vencimento_2 = data_de_início + timedelta(days=prazo_2_em_dias)
+            values = {
+                "identificador": prazo["identificador"],
+                "data_de_início": data_de_início,
+                "prazo_1_em_dias": prazo["prazo_1_em_dias"],
+                "prazo_2_em_dias": prazo["prazo_2_em_dias"],
+                "data_de_vencimento_1": data_de_início
+                + timedelta(days=prazo["prazo_1_em_dias"]),
+                "data_de_vencimento_2": data_de_início
+                + timedelta(days=prazo["prazo_2_em_dias"]),
+            }
 
-            Prazo.objects.update_or_create(
-                identificador=identificador,
-                data_de_início=data_de_início,
-                prazo_1_em_dias=prazo_1_em_dias,
-                prazo_2_em_dias=prazo_2_em_dias,
-                data_de_vencimento_1=data_de_vencimento_1,
-                data_de_vencimento_2=data_de_vencimento_2,
-            )
-
-            print(f'Prazo "{identificador}" inserido ou atualizado')
+            try:
+                prazo = Prazo.objects.get(identificador=values["identificador"])
+                changed = False
+                for key, value in values.items():
+                    if getattr(prazo, key) != value:
+                        changed = True
+                        setattr(prazo, key, value)
+                if changed:
+                    prazo.save()
+                    atualizados += 1
+                    print(f'Prazo "{values["identificador"]}" atualizado')
+            except Prazo.DoesNotExist:
+                add_prazo = Prazo(**values)
+                add_prazo.save()
+                inseridos += 1
+                print(f'Prazo "{values["identificador"]}" inserido')
 
         self.stdout.write(
             self.style.SUCCESS(
-                f'{len(seed_data["data"])} prazos inseridos ou atualizados com sucesso.'
+                f"{inseridos} prazos inseridos e {atualizados} atualizados com sucesso."
             )
         )
