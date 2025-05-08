@@ -18,7 +18,7 @@ main {
   border-bottom-left-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   width: 75%;
-  margin: auto;
+  margin: 0 auto 64px auto;
   padding: 40px 0;
 }
 
@@ -41,21 +41,29 @@ button:hover {
 }
 
 form button,
-tfoot a {
-  padding: 0.5em 0.75em;
+div.navigation a {
+  padding: 0.5em 0.75rem;
   color: white;
   font-weight: bold;
   background: #267a34;
   text-decoration: none;
   border-radius: 16px;
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 form button:hover,
-tfoot a:hover {
+div.navigation a:hover {
   text-decoration: none;
   background: #1e4b25;
   transition: 0.2s;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
 }
 
 table {
@@ -81,11 +89,6 @@ table {
   tbody td {
     border: 1px solid #cccccc;
   }
-
-  tfoot td {
-    text-align: center;
-    padding: 16px 0;
-  }
 }
 
 aside {
@@ -99,7 +102,7 @@ aside {
     border-radius: 16px;
     padding: 8px;
     border: 1px solid #aaaaaa;
-    font-size: 1em;
+    font-size: 1rem;
   }
 
   input[type="text"],
@@ -150,13 +153,13 @@ hr {
   align-items: center;
 
   button {
-    font-size: 1em;
+    font-size: 1rem;
     margin-left: 8px;
   }
 }
 
 .current {
-  font-size: 1em;
+  font-size: 1rem;
   margin: 0 4px;
 }
 
@@ -174,12 +177,13 @@ hr {
 }
 
 .delete-td {
-  width: 4em;
+  width: 4rem;
 }
 
-.delete-td img {
-  width: 1.5em;
-  height: 1.5em;
+.delete-td img,
+.prazo-vencido img {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .delete-td a:hover {
@@ -195,6 +199,12 @@ hr {
 .flex-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -237,7 +247,7 @@ hr {
 
 .toast li {
   list-style-type: none;
-  padding: 1em 2em;
+  padding: 1em 2rem;
   font-weight: bold;
 }
 
@@ -249,6 +259,18 @@ hr {
 .toast li.error {
   background: #e74e46cf;
   color: white;
+}
+
+.prazo-vencido {
+  color: #941a14;
+
+  .vencido-icon {
+    display: block;
+  }
+}
+
+.vencido-icon {
+  display: none;
 }
 
 .fade-in {

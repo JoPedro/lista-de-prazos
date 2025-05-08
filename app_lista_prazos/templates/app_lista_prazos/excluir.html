@@ -1,5 +1,6 @@
 {% extends "app_lista_prazos/base.html" %}
 {% load static %}
+{% load abs %}
 
 {% block content %}
 <div class="small-tab">
@@ -16,12 +17,12 @@
       <p>Prazo 1: {{ prazo.prazo_1_em_dias }} dias</p>
       <p>
         Vence em: {{ prazo.data_de_vencimento_1 | date:"d/m/Y" }}
-        <b>({{ prazo.dias_para_vencer_1 }} dias)</b>
+        <b>({% if prazo.dias_para_vencer_1 < 0 %}há {% endif %}{{ prazo.dias_para_vencer_1 | abs }} dias)</b>
       </p>
       <p>Prazo 2: {{ prazo.prazo_2_em_dias }} dias</p>
       <p>
         Vence em: {{ prazo.data_de_vencimento_2 | date:"d/m/Y" }}
-        <b>({{ prazo.dias_para_vencer_2 }} dias)</b>
+        <b>({% if prazo.dias_para_vencer_2 < 0 %}há {% endif %}{{ prazo.dias_para_vencer_2 | abs }} dias)</b>
       </p>
       <button class="button-delete" type="submit">Excluir</button>
     </form>
