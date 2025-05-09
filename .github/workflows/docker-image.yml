@@ -17,4 +17,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag jopedrop/lista-de-prazos:latest
     - name: Push the image to Docker Hub
-      run: docker push jopedrop/lista-de-prazos:latest
+      run: |
+        docker login -u jopedrop -p ${{ secrets.DOCKER_HUB_TOKEN }} 
+        docker push jopedrop/lista-de-prazos:latest
