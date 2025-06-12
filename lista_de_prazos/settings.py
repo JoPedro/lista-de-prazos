@@ -84,8 +84,14 @@ WSGI_APPLICATION = "lista_de_prazos.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "data/db.sqlite3",
+        "ENGINE": "django.db.backends.{}".format(
+            os.getenv("DATABASE_ENGINE", "sqlite3")
+        ),
+        "NAME": os.getenv("DATABASE_NAME", BASE_DIR / "data/db.sqlite3"),
+        "USER": os.getenv("DATABASE_USERNAME", "myprojectuser"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", "password"),
+        "HOST": os.getenv("DATABASE_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DATABASE_PORT", 5432),
     }
 }
 
@@ -139,3 +145,7 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 RUN_SERVER_PORT = 8001
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
