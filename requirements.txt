@@ -3,6 +3,8 @@ Django==5.1.7
 dotenv==0.9.9
 gunicorn==23.0.0
 packaging==25.0
+psycopg==3.2.9
 python-dotenv==1.0.1
 sqlparse==0.5.3
+typing_extensions==4.14.0
 whitenoise==6.9.0
