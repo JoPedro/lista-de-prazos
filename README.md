@@ -90,7 +90,7 @@ Um projeto simples em Django para organizar prazos em uma lista legível onde os
 
 ## Primeiros Passos
 
-Este projeto é melhor instalado como um contêiner Docker através de sua imagem distribuída publicamente. Veja a [página da imagem][pkg-url] na aba de [pacotes][Packages-url] deste repositório para mais informações. A imagem também está disponível no [Docker Hub][Docker-hub-img-url].
+Este projeto é melhor executado em um contêiner Docker através de sua imagem distribuída publicamente. Veja a [página da imagem][pkg-url] na aba de [pacotes][Packages-url] deste repositório para mais informações. A imagem também está disponível no [Docker Hub][Docker-hub-img-url].
 
 ### Pré-requisitos
 
@@ -106,59 +106,75 @@ O comando acima deve retornar a versão da sua instalação.
 
 ### Instalação e Execução
 
-1. Baixe a imagem disponível em um dos repositórios públicos utilizando o comando [`docker pull`][docker-pull-docs].
+A execução do contêiner necessita de uma série de configurações obrigatórias. Um arquivo de instruções [Docker Compose][docker-compose-url] está disponível no repositório para facilitar a execução adequada, você também pode criar na sua máquina local um arquivo `docker-compose.yml` e colar o seguinte código, substituindo os valores marcados desta forma `<valor>` com os seus valores:
 
-   Você pode baixar do [GitHub Container Registry][pkg-url]:
+```yml
+services:
+  web:
+    # Docker Hub: jopedrop/lista-de-prazos:latest
+    image: ghcr.io/jopedro/lista-de-prazos:latest
+    container_name: lista-de-prazos
+    restart: always # opcional: reiniciar a cada boot
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      DEBUG: False # IMPORTANTE: Este valor deve ser sempre False
+      DJANGO_SECRET_KEY: <sua chave secreta Django>
+      DJANGO_ALLOWED_HOSTS: localhost
+      DJANGO_CSRF_TRUSTED_ORIGINS: http://localhost:8000
+      DATABASE_ENGINE: postgresql
+      DATABASE_NAME: <nome do banco de dados>
+      DATABASE_USERNAME: <nome do usuário do BD>
+      DATABASE_PASSWORD: <senha do BD>
+      DATABASE_HOST: db # IMPORTANTE: deve ser o mesmo nome do serviço do BD
+      DATABASE_PORT: 5432
 
-   ```sh
-   docker pull ghcr.io/jopedro/lista-de-prazos:latest
-   ```
+  db:
+    image: postgres:17
+    container_name: postgres_db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: <nome do usuário do BD>
+      POSTGRES_DB: <nome do banco de dados>
+      POSTGRES_PASSWORD: <senha do BD>
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U <nome do usuário do BD> -d <nome do banco de dados>",
+        ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+volumes:
+  postgres_data:
+```
 
-   Ou do [Docker Hub][Docker-hub-img-url]:
-
-   ```sh
-   docker pull jopedrop/lista-de-prazos:latest
-   ```
-
-2. A execução do contêiner necessita de uma série de configurações obrigatórias e recomendadas. Um arquivo de instruções [Docker Compose][docker-compose-url] está disponível no repositório para facilitar a execução adequada, você também pode criar na sua máquina local um arquivo `docker-compose.yml` e colar o seguinte código:
-   ```yml
-   services:
-     web:
-       image: jopedrop/lista-de-prazos:latest
-       container_name: lista-de-prazos
-       restart: always
-       ports:
-         - 8000:8000
-       volumes:
-         - prazo-data:/app/data
-       env_file:
-         - .env.prod
-   volumes:
-     prazo-data:
-   ```
+Sua chave Django pode ser gerada utilizando a versão web do pacote [Djecrety][djecrety-url].
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Documentação
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Listar Prazos
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+![Tela inicial][product-screenshot]
 
-<p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
+Esta é a tela inicial, nela estão listados todos os prazos cadastrados, em ordem cronológica segundo a data de início, você pode adicionar um novo prazo clicando no botão "CADASTRAR NOVO PRAZO".
 
-<!-- ROADMAP -->
+### Cadastrar Prazos
 
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/JoPedro/lista-de-prazos/issues) for a full list of proposed features (and known issues).
+![Cadastrar novo prazo][cadastrar-novo-prazo-url]
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -228,7 +244,7 @@ Project Link: [https://github.com/JoPedro/lista-de-prazos](https://github.com/Jo
 [license-url]: /LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/joao-pedro-queiroz
-[product-screenshot]: /README-content/image.png
+[product-screenshot]: /README-content/tela-inicial.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
@@ -254,3 +270,5 @@ Project Link: [https://github.com/JoPedro/lista-de-prazos](https://github.com/Jo
 [Packages-url]: https://github.com/JoPedro?tab=packages&repo_name=lista-de-prazos
 [docker-compose-url]: /README-content/docker-compose.yml
 [docker-pull-docs]: https://docs.docker.com/reference/cli/docker/image/pull/
+[djecrety-url]: https://djecrety.ir/
+[cadastrar-novo-prazo-url]: /README-content/cadastrar-novo-prazo.png
