@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
-from django.http import HttpResponseRedirect
+from django.db import IntegrityError
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from app_lista_prazos.forms import PrazoForm
 from app_lista_prazos.models import Prazo
@@ -27,19 +28,27 @@ def index(request):
 
 
 def adicionar(request):
+    identificador = request.POST.get("identificador").strip()
+    prazo = Prazo.objects.filter(identificador=identificador)
+
+    if len(prazo) > 0:
+        messages.error(
+            request,
+            "Cadastro inválido. Há um prazo com o mesmo identificador.",
+        )
+        return HttpResponseRedirect("/")
+
     data_de_início = datetime.strptime(
-        request.POST.get("data_de_início"), "%d/%m/%Y"
+        request.POST.get("data_de_início"), "%Y-%m-%d"
     ).replace(tzinfo=timezone.get_current_timezone())
     prazo_1_em_dias = int(request.POST.get("prazo_1_em_dias"))
     prazo_2_em_dias = int(request.POST.get("prazo_2_em_dias"))
 
     values = {
-        "identificador": request.POST.get("identificador"),
+        "identificador": identificador.strip(),
         "data_de_início": data_de_início,
         "prazo_1_em_dias": prazo_1_em_dias,
         "prazo_2_em_dias": prazo_2_em_dias,
-        "data_de_vencimento_1": data_de_início + timedelta(days=prazo_1_em_dias),
-        "data_de_vencimento_2": data_de_início + timedelta(days=prazo_2_em_dias),
     }
 
     add_prazo = Prazo(**values)
