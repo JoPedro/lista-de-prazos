@@ -45,7 +45,7 @@ def adicionar(request):
     prazo_2_em_dias = int(request.POST.get("prazo_2_em_dias"))
 
     values = {
-        "identificador": identificador.strip(),
+        "identificador": identificador,
         "data_de_início": data_de_início,
         "prazo_1_em_dias": prazo_1_em_dias,
         "prazo_2_em_dias": prazo_2_em_dias,
