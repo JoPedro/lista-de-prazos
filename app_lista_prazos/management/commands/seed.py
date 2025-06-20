@@ -25,10 +25,6 @@ class Command(BaseCommand):
                 "data_de_início": data_de_início,
                 "prazo_1_em_dias": prazo["prazo_1_em_dias"],
                 "prazo_2_em_dias": prazo["prazo_2_em_dias"],
-                "data_de_vencimento_1": data_de_início
-                + timedelta(days=prazo["prazo_1_em_dias"]),
-                "data_de_vencimento_2": data_de_início
-                + timedelta(days=prazo["prazo_2_em_dias"]),
             }
 
             try:

@@ -1,16 +1,22 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db import models
 from django.utils import timezone
 
 
 # Create your models here.
 class Prazo(models.Model):
-    identificador = models.CharField(max_length=255, primary_key=True)
+    identificador = models.CharField(max_length=255, unique=True)
     data_de_início = models.DateTimeField(default=timezone.now)
     prazo_1_em_dias = models.PositiveSmallIntegerField(default=0)
     prazo_2_em_dias = models.PositiveSmallIntegerField(default=0)
-    data_de_vencimento_1 = models.DateTimeField(default=timezone.now)
-    data_de_vencimento_2 = models.DateTimeField(default=timezone.now)
+
+    @property
+    def data_de_vencimento_1(self):
+        return self.data_de_início + timedelta(days=self.prazo_1_em_dias)
+
+    @property
+    def data_de_vencimento_2(self):
+        return self.data_de_início + timedelta(days=self.prazo_2_em_dias)
 
     @property
     def dias_para_vencer_1(self):
