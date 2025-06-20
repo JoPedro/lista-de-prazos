@@ -111,6 +111,10 @@ aside {
     box-sizing: border-box;
   }
 
+  input[type="date"] {
+    display: block;
+  }
+
   form {
     padding: 24px;
 
