@@ -35,7 +35,7 @@
 
 <h3 align="center">Lista de Prazos</h3>
   <p align="center">
-    Lista de prazos por identificador ordenada por data de início.
+    Lista de prazos por identificador ordenada pela data de início.
     <br />
     <a href="https://github.com/JoPedro/lista-de-prazos/issues/new?labels=bug">Reportar Bug</a>
     &middot;
@@ -61,16 +61,17 @@
       </ul>
     </li>
     <li>
-      <a href="#documentação">Documentação</a>
+      <a href="#uso">Uso</a>
       <ul>
         <li><a href="#listar-prazos">Listar Prazos</a></li>
         <li><a href="#cadastrar-prazos">Cadastrar Prazos</a></li>
+        <li><a href="#excluir-prazos">Excluir Prazos</a></li>
       </ul>
     </li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#contribuição">Contribuição</a></li>
+    <li><a href="#licença">Licença</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="#agradecimentos">Agradecimentos</a></li>
   </ol>
 </details>
 
@@ -80,7 +81,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://hub.docker.com/r/jopedrop/lista-de-prazos)
 
-Um projeto simples em Django para organizar prazos em uma lista legível onde os prazos com a data de início mais antiga aparecem primeiro. Este projeto foi feito para outra pessoa usar, logo há algumas funcionalidades mais específicas do seu caso de uso, como a presença de dois prazos.
+Um projeto simples em Django para organizar prazos em uma lista legível onde os prazos com a data de início mais antiga aparecem primeiro. Este projeto foi feito para o uso de outra pessoa, logo há algumas funcionalidades mais específicas do seu caso de uso, como a presença de dois prazos.
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -101,7 +102,7 @@ Este projeto é melhor executado em um contêiner Docker através de sua imagem 
 
 Para execução do projeto, é necessária a instalação da Docker Engine. Isso pode ser feito através da instalação do aplicativo [Docker Desktop][Docker-url], que vem com a Docker Engine já instalada, mas há também a opção de [instalar a Docker Engine individualmente](https://docs.docker.com/engine/install/).
 
-Antes de prosseguir, verifique sua instalação da Docker Engine através do comando:
+**Antes de prosseguir, verifique sua instalação da Docker Engine através do comando:**
 
 ```sh
 docker -v
@@ -111,7 +112,9 @@ O comando acima deve retornar a versão da sua instalação.
 
 ### Instalação e Execução
 
-A execução do contêiner necessita de uma série de configurações obrigatórias. Um arquivo de instruções [Docker Compose][docker-compose-url] está disponível no repositório para facilitar a execução adequada, você também pode criar na sua máquina local um arquivo `docker-compose.yml` e colar o seguinte código, substituindo os valores marcados desta forma `<valor>` com os seus valores:
+A execução do contêiner necessita de uma série de configurações obrigatórias. Um arquivo de instruções [Docker Compose][docker-compose-url] está disponível no repositório para facilitar a execução adequada.
+
+Você também pode criar na sua máquina local um arquivo `docker-compose.yml` e colar o seguinte código, substituindo os valores conforme sua configuração:
 
 ```yml
 services:
@@ -163,13 +166,31 @@ volumes:
   postgres_data:
 ```
 
-Sua chave Django pode ser gerada utilizando a versão web do pacote [Djecrety][djecrety-url].
+_Obs.: Sua chave Django pode ser gerada utilizando a versão web do pacote [Djecrety][djecrety-url]._
+
+Para executar as instruções, basta abrir o seu terminal de escolha no mesmo diretório em que se encontra o arquivo `docker-compose.yml` e executar o seguinte comando:
+
+```sh
+docker compose up -d
+```
+
+Se você quiser checar todos os serviçoes iniciados por essas instruções, execute este comando:
+
+```sh
+docker compose ps --all
+```
+
+O arquivo de instruções fornecido neste documento determina que os serviços serão reiniciados automaticamente cada vez que o sistema operacional for reiniciado, com a política de `restart: always`. Para desligar os serviços, excluindo os contêineres e networks associadas (não se preocupe, seus dados serão sempre persistidos no volume criado, a não ser que você o exclua incluindo a flag `--volumes`), execute este comando no mesmo diretório do arquivo `docker-compose.yml`:
+
+```sh
+docker compose down
+```
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 
-## Documentação
+## Uso
 
 ### Listar Prazos
 
@@ -179,28 +200,35 @@ Esta é a tela inicial, nela estão listados todos os prazos cadastrados, em ord
 
 ### Cadastrar Prazos
 
-![Cadastrar novo prazo][cadastrar-novo-prazo-url]
+![Cadastrar prazos][cadastrar-prazos-screenshot]
+
+Para cadastrar um novo prazo, você deve preencher o formulário com um **identificador único**, data de inicío e seus dois prazos em dias. Após o cadastro, você será automaticamente redirecionado para a página inicial, onde poderá checar o prazo recém-cadastrado clicando no botão de navegar para a última página.
+
+### Excluir Prazos
+
+![Excluir prazos][excluir-prazos-screenshot]
+
+Para excluir um prazo, verifique sua linha na tabela e clique no botão de excluir que leva para a página de remoção, onde poderá confirmar se deseja realmente remover o prazo selecionado. Se clicar em "Excluir", o prazo é removido definitivamente e você será redicecionado para a página inicial.
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+## Contribuição
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+No espírito de apoiar a comunidade de código aberto, qualquer contribuição para este projeto é **muito bem-vinda**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Se você tiver alguma sugestão para melhorá-lo, faça um fork do repositório e crie um pull request. Você também pode simplesmente abrir uma issue com a tag "enhancement".
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Faça um fork do projeto
+2. Crie sua feature branch (`git checkout -b feature/exemplo`)
+3. Faça um commit das suas alterações (`git commit -m 'feat: Funcionalidade exemplo adicionada'`)
+4. Envie para a branch (`git push origin feature/exemplo`)
+5. Abra um pull request
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
-### Top contributors:
+### Principais Contribuidores:
 
 <a href="https://github.com/JoPedro/lista-de-prazos/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=JoPedro/lista-de-prazos" alt="contrib.rocks image" />
@@ -208,7 +236,7 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- LICENSE -->
 
-## License
+## Licença
 
 Distribuído sob a licença MIT. Veja [LICENSE][license-url] para mais informações.
 
@@ -216,21 +244,20 @@ Distribuído sob a licença MIT. Veja [LICENSE][license-url] para mais informaç
 
 <!-- CONTACT -->
 
-## Contact
+## Contato
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - joaopedrosilvaqueiroz@gmail.com
+João Pedro - [LinkedIn][linkedin-url] - joaopedrosilvaqueiroz@gmail.com
 
-Project Link: [https://github.com/JoPedro/lista-de-prazos](https://github.com/JoPedro/lista-de-prazos)
+Link do Projeto: [https://github.com/JoPedro/lista-de-prazos](https://github.com/JoPedro/lista-de-prazos)
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
 
-## Acknowledgments
+## Agradecimentos
 
-- []()
-- []()
-- []()
+- [Best README Template por Othneil Drew][best-readme-url]
+- [Djecrety por Majid Rouhi][djecrety-github]
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -276,4 +303,7 @@ Project Link: [https://github.com/JoPedro/lista-de-prazos](https://github.com/Jo
 [docker-compose-url]: /README-content/docker-compose.yml
 [docker-pull-docs]: https://docs.docker.com/reference/cli/docker/image/pull/
 [djecrety-url]: https://djecrety.ir/
-[cadastrar-novo-prazo-url]: /README-content/cadastrar-novo-prazo.png
+[cadastrar-prazos-screenshot]: /README-content/cadastrar-prazos.png
+[excluir-prazos-screenshot]: /README-content/excluir-prazo.png
+[best-readme-url]: https://github.com/othneildrew/Best-README-Template
+[djecrety-github]: https://github.com/mrouhi13/djecrety
