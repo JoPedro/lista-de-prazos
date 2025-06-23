@@ -1,0 +1,17 @@
+services:
+  web:
+    image: ghcr.io/jopedro/lista-de-prazos:latest
+    # Docker Hub: jopedrop/lista-de-prazos:latest
+    container_name: lista-de-prazos
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - prazo-data:/app/data
+    environment:
+      - DEBUG=False
+      - DJANGO_SECRET_KEY='django-insecure-edn_p=h!q9r0=^gp5k)0f8d0@949rofr0i5)ky8u*v5e#_a7=i'
+      - DJANGO_ALLOWED_HOSTS=localhost
+      - DJANGO_CSRF_TRUSTED_ORIGINS=http://localhost:8000
+volumes:
+  prazo-data:
