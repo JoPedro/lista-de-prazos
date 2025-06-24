@@ -1,6 +1,4 @@
-from time import strftime
 from django.forms import DateTimeInput, ModelForm
-from django.utils import timezone
 
 from app_lista_prazos.models import Prazo
 
@@ -15,5 +13,5 @@ class PrazoForm(ModelForm):
             "prazo_2_em_dias",
         ]
         widgets = {
-            "data_de_início": DateTimeInput(attrs={"type": "date"}),
+            "data_de_início": DateTimeInput(format="%Y-%m-%d", attrs={"type": "date"}),
         }

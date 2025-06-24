@@ -69,3 +69,38 @@ def excluir(request, pk):
     context = {"prazo": prazo}
 
     return render(request, "app_lista_prazos/excluir.html", context)
+
+
+def editar(request, pk):
+    prazo = Prazo.objects.get(identificador=pk)
+
+    if request.method == "POST":
+        identificador = request.POST.get("identificador").strip()
+
+        if identificador != prazo.identificador:
+            found_prazo = Prazo.objects.filter(identificador=identificador)
+
+            if len(found_prazo) > 0:
+                messages.error(
+                    request,
+                    "Operação inválida. Há um prazo com o mesmo identificador.",
+                )
+                return HttpResponseRedirect(f"/editar/{prazo.identificador}")
+
+        prazo.identificador = identificador
+        prazo.data_de_início = datetime.strptime(
+            request.POST.get("data_de_início"), "%Y-%m-%d"
+        ).replace(tzinfo=timezone.get_current_timezone())
+        prazo.prazo_1_em_dias = int(request.POST.get("prazo_1_em_dias"))
+        prazo.prazo_2_em_dias = int(request.POST.get("prazo_2_em_dias"))
+
+        prazo.save()
+        messages.success(request, "As alterações foram salvas com sucesso.")
+
+        return HttpResponseRedirect(f"/editar/{prazo.identificador}")
+
+    form = PrazoForm(instance=prazo)
+
+    context = {"prazo": prazo, "form": form}
+
+    return render(request, "app_lista_prazos/editar.html", context)

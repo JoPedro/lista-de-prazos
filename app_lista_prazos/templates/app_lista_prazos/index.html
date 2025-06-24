@@ -42,6 +42,7 @@
           <th>Vence em</th>
           <th>Prazo 2 (dias)</th>
           <th>Vence em</th>
+          <th class="edit-th">Editar</th>
           <th class="delete-th">Excluir</th>
         </tr>
       </thead>
@@ -98,11 +99,17 @@
               {% endif %}
             </div>
           </td>
-          <td class="delete-td">
+          <td class="action-td">
             <div class="flex-center">
-              <a href=" /excluir/{{ prazo_obj.identificador | urlencode }}">
-                <img class="flex-center" src="{% static 'app_lista_prazos/img/trash.svg' %}"
-                  alt="Ícone de lata de lixo">
+              <a href="/editar/{{ prazo_obj.identificador | urlencode }}">
+                <img class="flex-center" src="{% static 'app_lista_prazos/img/edit.svg' %}" alt="Ícone de lápis">
+              </a>
+            </div>
+          </td>
+          <td class="action-td">
+            <div class="flex-center">
+              <a href="/excluir/{{ prazo_obj.identificador | urlencode }}">
+                <img class="flex-center" src="{% static 'app_lista_prazos/img/trash.svg' %}" alt="Ícone de lata de lixo">
               </a>
             </div>
           </td>

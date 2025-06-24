@@ -66,6 +66,7 @@
         <li><a href="#listar-prazos">Listar Prazos</a></li>
         <li><a href="#cadastrar-prazos">Cadastrar Prazos</a></li>
         <li><a href="#excluir-prazos">Excluir Prazos</a></li>
+        <li><a href="#editar-prazos">Editar Prazos</a></li>
       </ul>
     </li>
     <li><a href="#contribuição">Contribuição</a></li>
@@ -208,7 +209,13 @@ Para cadastrar um novo prazo, você deve preencher o formulário com um **identi
 
 ![Excluir prazos][excluir-prazos-screenshot]
 
-Para excluir um prazo, verifique sua linha na tabela e clique no botão de excluir que leva para a página de remoção, onde poderá confirmar se deseja realmente remover o prazo selecionado. Se clicar em "Excluir", o prazo é removido definitivamente e você será redicecionado para a página inicial.
+Para excluir um prazo, verifique sua linha na tabela e clique no botão da coluna "Excluir", que leva para a página de remoção, onde poderá confirmar se deseja realmente remover o prazo selecionado. Se clicar em "Excluir", o prazo é removido definitivamente e você será redicecionado para a página inicial.
+
+### Editar Prazos
+
+![Editar Prazos][editar-prazos-screenshot]
+
+Para editar um prazo, verifique sua linha na tabela e clique no botão da coluna "Editar", que leva para a página de edição, onde poderá mudar qualquer um dos valores cadastrados (atenção para o identificador, ele deve sempre ser único) e salvar as alterações clicando no botão "Salvar Alterações".
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -258,6 +265,7 @@ Link do Projeto: [https://github.com/JoPedro/lista-de-prazos](https://github.com
 
 - [Best README Template por Othneil Drew][best-readme-url]
 - [Djecrety por Majid Rouhi][djecrety-github]
+- [SVG Repo][svg-repo-url]
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -307,3 +315,5 @@ Link do Projeto: [https://github.com/JoPedro/lista-de-prazos](https://github.com
 [excluir-prazos-screenshot]: /README-content/excluir-prazo.png
 [best-readme-url]: https://github.com/othneildrew/Best-README-Template
 [djecrety-github]: https://github.com/mrouhi13/djecrety
+[svg-repo-url]: https://www.svgrepo.com/
+[editar-prazos-screenshot]: /README-content/editar-prazo.png
