@@ -1,0 +1,31 @@
+{% extends "app_lista_prazos/base.html" %}
+{% load static %}
+{% load abs %}
+
+{% block content %}
+{% if messages %}
+<div class="toast fade-in-and-out">
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %}class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="small-tab">
+  <a href="/">&lt; VOLTAR</a>
+</div>
+<hr>
+<main class="action">
+  <section>
+    <form action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      {{ field.as_field_group }}
+      {% endfor %}
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </section>
+</main>
+{% endblock %}
