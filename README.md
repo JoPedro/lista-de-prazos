@@ -58,6 +58,7 @@
       <ul>
         <li><a href="#pré-requisitos">Pré-requisitos</a></li>
         <li><a href="#instalação-e-execução">Instalação e Execução</a></li>
+        <li><a href="#atualização">Atualização</a></li>
       </ul>
     </li>
     <li>
@@ -185,6 +186,21 @@ O arquivo de instruções fornecido neste documento determina que os serviços s
 
 ```sh
 docker compose down
+```
+
+### Atualização
+
+É importante que você esteja sempre executando a versão mais recente da imagem. Se suas instruções Docker Compose incluem a política de `restart: always`, pode ser que seu contêiner esteja desatualizado. Periodicamente verifique a página de [Releases][github-releases-url], e se há um Release novo, execute no mesmo diretório que o arquivo `docker-compose.yml` o seguinte comando para baixar a versão nova:
+
+```sh
+docker compose pull
+```
+
+Em seguida, reinicie seus serviços para a atualização fazer efeito:
+
+```sh
+docker compose down
+docker compose up -d
 ```
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
@@ -317,3 +333,4 @@ Link do Projeto: [https://github.com/JoPedro/lista-de-prazos](https://github.com
 [djecrety-github]: https://github.com/mrouhi13/djecrety
 [svg-repo-url]: https://www.svgrepo.com/
 [editar-prazos-screenshot]: /README-content/editar-prazo.png
+[github-releases-url]: https://github.com/JoPedro/lista-de-prazos/releases
