@@ -83,7 +83,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://hub.docker.com/r/jopedrop/lista-de-prazos)
 
-Um projeto simples em Django para organizar prazos em uma lista legível onde os prazos com a data de início mais antiga aparecem primeiro. Este projeto foi feito para o uso de outra pessoa, logo há algumas funcionalidades mais específicas do seu caso de uso, como a presença de dois prazos.
+Um projeto simples em Django para organizar prazos em uma lista legível onde os prazos com a data de início mais antiga aparecem primeiro. Nele você pode criar, excluir e editar prazos exibidos em uma tabela paginada, em ordem cronológica. Este projeto foi feito para o uso de outra pessoa, logo há algumas funcionalidades mais específicas do seu caso de uso, como a presença de dois prazos por item.
 
 <p align="right">(<a href="#readme-top">retornar ao topo</a>)</p>
 
@@ -219,7 +219,7 @@ Esta é a tela inicial, nela estão listados todos os prazos cadastrados, em ord
 
 ![Cadastrar prazos][cadastrar-prazos-screenshot]
 
-Para cadastrar um novo prazo, você deve preencher o formulário com um **identificador único**, data de inicío e seus dois prazos em dias. Após o cadastro, você será automaticamente redirecionado para a página inicial, onde poderá checar o prazo recém-cadastrado clicando no botão de navegar para a última página.
+Para cadastrar um novo prazo, você deve preencher o formulário com um **identificador único**, data de início e seus dois prazos em dias. Após o cadastro, você será automaticamente redirecionado para a página inicial, onde poderá checar o prazo recém-cadastrado clicando no botão de navegar para a última página.
 
 ### Excluir Prazos
 
